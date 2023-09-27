@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Change Password{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="Old Password">Old Password</label>
+    <input type="password" name="oldpassword" id="oldpassword" required>
+    <label for="password">New Password</label>
+    <input type="password" name="password1" id="password1" required>
+    <label for="password">Repeat New Password</label>
+    <input type="password" name="password2" id="password2" required>
+    <input type="submit" value="Change Password">
+  </form>
+{% endblock %}

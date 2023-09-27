@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('blog.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for topic in topics %}
+  <h1></h1>
+  <details>
+  <summary>{{topic[0].topic_name}}</summary>
+  
+
+    {% for post in posts %}
+    
+      {%if post[0].topic_id == topic[0].topic_id %}
+        <article class="post">
+          <header>
+            <div>
+              <h1><a href="{{ url_for('blog.post', post_id=post[0].id) }}">{{ post[0].title }}</a></h1>
+              <div class="about">by <a href="{{ url_for('user.profile', usr_id=post[0].author_id) }}"> {{ post[1].username }}</a> on {{ post[0].created|zeitformat }}</div>
+            </div> 
+            {% if g.user %}
+            {% if g.user[0].id == post['author_id'] %}
+              <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+            {% endif %}
+            {%endif%}
+          </header>
+        </article>
+      {%endif%}
+      
+    {% endfor %}
+  </details>
+  {% endfor %}
+{% endblock %}

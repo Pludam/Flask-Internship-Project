@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Topic{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="post">
+    <label for="topicname">Topic Name</label>
+    <input name="topicname" id="topicname" value="{{ request.form['topicname'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+
+{% endblock %}
