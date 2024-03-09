@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+
 {% block header %}
   <h1>{% block title %}{{ user[0].username }}`s Profile{% endblock %}</h1>
  
-  
   {% if g.user%}
+
     {% if g.user[0].id == user[0].id%}
     <a href ="{{url_for('auth.changelogin')}}"class="change_login">Change Login</a>
     <form action="{{ url_for('auth.delete', id=user[0].id) }}" method="post">
@@ -11,7 +12,9 @@
     </form>
     
     {% endif %}
+
   {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -23,6 +26,7 @@
 <hr>
 <h1>{{ user[0].username  }}`s Posts</h1>
 <hr class="stats">
+
 {% for post in post %}
 <article class="post">
   <header>
@@ -31,15 +35,22 @@
       <div class="about">by {{ post[1].username }} on {{ post[0].created | zeitformat }}</div>
     </div> 
     {% if g.user %}
+
     {% if g.user[0].id == post[0].author_id %}
       <a class="action" href="{{ url_for('blog.update', id=post[0].id) }}">Edit</a>
     {% endif %}
+
     {%endif%}
+
   </header>
   <p class="body">{{ post['body'] }}</p>
 </article>
+
 {% if not loop.last %}
   <hr>
+
 {% endif %}
+
 {% endfor %}
+
 {% endblock %}

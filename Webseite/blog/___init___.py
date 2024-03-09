@@ -5,9 +5,7 @@ from db import db
 from time import *
 from datetime import *
 import user
-
 from flask_avatars import Avatars
-
 
 
 def create_app(test_config=None):
@@ -16,7 +14,6 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     
     avatars = Avatars(app)
- 
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -24,8 +21,6 @@ def create_app(test_config=None):
         APPNAME="Blog",
         AVATARS_SAVE_PATH = "C:\\Users\\Damian.Plura\\Desktop\\Webseite\\blog\\avatars")
     db.init_app(app)
-
-
 
 
     if test_config is None:
@@ -39,12 +34,9 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='index')
 
     
-    
     app.secret_key = b'@Rm`#*}FU9Wf2J;A#He"]}O(c^#gc'
     app.register_blueprint(auth.bp)
     app.register_blueprint(user.bp)
-
-
 
 
     @app.route("/set/<theme>")
@@ -52,7 +44,6 @@ def create_app(test_config=None):
         res = make_response(redirect(request.referrer))
         res.set_cookie("theme", theme)
         return res
-
 
 
     @app.template_filter()
@@ -64,6 +55,7 @@ def create_app(test_config=None):
         value3 = strftime('%d.%m.%Y at %H:%M UTC', value2)
         return value3
     
+
     @app.route('/avatar/<string:usrnme>')
     def avatar(usrnme):
         filename = r'\\' + usrnme +"_s.png"
@@ -71,4 +63,3 @@ def create_app(test_config=None):
         print(filename2)
         return send_file(filename2)
     return app
-
