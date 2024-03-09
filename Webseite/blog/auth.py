@@ -14,7 +14,7 @@ from flask import current_app,url_for,g
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-
+# login endpoint
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
@@ -40,14 +40,14 @@ def login():
 
     return render_template('auth/login.html')
 
-
+# logout endpoint
 @bp.route('/logout')
 def logout():
     res = make_response(redirect(url_for("index")))
     res.set_cookie("user_id","None")
     return res
 
-
+# User registration endpoint
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -69,7 +69,7 @@ def register():
 
     return render_template("auth/register.html")
 
-
+# User deletion endpoint
 @bp.route("/<int:id>/delete", methods=["GET", "POST"])
 def delete(id):
     db.session.query(Post).where(Post.author_id == id).update({Post.author_id:0})
@@ -78,7 +78,7 @@ def delete(id):
     
     db.session.commit()
     return redirect(url_for('index'))
-
+# login required wrapper
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
@@ -91,7 +91,7 @@ def login_required(view):
 
 
 
-
+# endpoint for setting an new password
 @bp.route('/changelogin',methods=["GET", "POST"])
 def changelogin():
     if not g.user:
@@ -105,7 +105,7 @@ def changelogin():
         Newpassword1 = request.form['password1']
         Newpassword2 = request.form['password2']
         if not Newpassword1 == Newpassword2:
-            error = "newpassword not the same"
+            error = "new password not the same"
           
         elif not check_password_hash(oldpassworddb[0].password, OldPassword):
              error = 'Incorrect password.'    
@@ -120,7 +120,7 @@ def changelogin():
         flash(error)
 
     return render_template("auth/changelogin.html")
-
+# loading an already logged in user
 @bp.before_app_request
 def load_logged_in_user():
     user_id = request.cookies.get("user_id")   
@@ -130,6 +130,7 @@ def load_logged_in_user():
         g.user = None
     generate_identicon()
 
+# Function for generating an icon for an new User if not already there
 def generate_identicon():
     if g.user:
         if not os.path.isfile(current_app.config['AVATARS_SAVE_PATH'] + r"\\" + g.user[0].username +"_s.png"):
