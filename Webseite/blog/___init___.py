@@ -76,7 +76,6 @@ def create_app(test_config=None):
         filename = r'\\' + usrnme +"_s.png"
         filename2 = app.config['AVATARS_SAVE_PATH'] + filename
         print(filename2)
-        #return send_from_directory(app.config['AVATARS_SAVE_PATH'], filename)
         return send_file(filename2)
     return app
 

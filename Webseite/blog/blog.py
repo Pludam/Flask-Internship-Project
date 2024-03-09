@@ -13,7 +13,6 @@ bp = Blueprint('blog', __name__)
 def index():
     posts = db.session.execute(select(Post,User).join(User,Post.author_id == User.id)).fetchall()
     topics = db.session.execute(select(Topic)).fetchall()
-    #.join(User,User.id == Post.author_id)
     
     return render_template('index.html', posts=posts, topics=topics)
 
@@ -134,30 +133,3 @@ def newtopic():
         db.session.commit()
         return redirect(url_for("index"))
     return render_template("blog/newtopic.html")
-
-'''
-SELECT com.*, usr.*
-FROM Comments com
-JOIN User usr
-ON com.user_id == usr.id
-WHERE com.post = 69
-'''
-""" select(Comments,User).join(User,User.id == Comments.user_id).where(Comments.post_id == post_id) """
-
-
-'''db.session.execute(text(
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
-            )'''
-
-#'DELETE FROM post WHERE id = ?', (id,)
-
-""" text(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?'), params = [id] """
-""" text("UPDATE post SET title = title, body = body WHERE id = id"),{"title"=title,"body"=body,"id"=id} """
-
-
-""" db.session.execute(update(Post, values={Post.title: title,Post.body:body})) """
