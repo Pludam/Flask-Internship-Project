@@ -1,13 +1,11 @@
 from flask import Blueprint,render_template
 from db import db, Post ,User
 from sqlalchemy import select 
-
 from flask import (
  Blueprint,redirect, render_template, url_for
 )
 from db import User,Post, db
 from sqlalchemy import select 
-
 
 bp = Blueprint('user', __name__)
 

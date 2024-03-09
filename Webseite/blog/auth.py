@@ -1,4 +1,3 @@
-
 from flask import (
  Blueprint, flash, g, redirect, render_template, request, url_for,make_response
 )
@@ -13,11 +12,7 @@ from os import listdir
 from flask import current_app,url_for,g
 
 
-
-
-
 bp = Blueprint('auth', __name__, url_prefix='/auth')
-
 
 
 @bp.route('/login', methods=('GET', 'POST'))
@@ -44,6 +39,8 @@ def login():
         flash(error)
 
     return render_template('auth/login.html')
+
+
 @bp.route('/logout')
 def logout():
     res = make_response(redirect(url_for("index")))

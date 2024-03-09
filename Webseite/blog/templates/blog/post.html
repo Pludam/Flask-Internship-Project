@@ -13,9 +13,11 @@
           <div class="about">by <a href="{{ url_for('user.profile', usr_id=post[0].author_id) }}"> {{ post[1].username }}</a> on {{ post[0].created | zeitformat }}</div>
         </div> 
         {% if g.user %}
+        
         {% if g.user[0].id == post[0].author_id %}
           <a class="action" href="{{ url_for('blog.update', id=post[0].id) }}">Edit</a>
         {% endif %}
+
         {%endif%}
       </header>
       <p class="body">{{ post[0].body }}</p>
@@ -29,6 +31,7 @@
         <input type="submit" value="Comment">
       </form>
       <hr>
+
       {% for comment in comments %}
         <article class="post">
           <header>
@@ -39,5 +42,7 @@
             </div> 
           </header>
         </article>
+
     {% endfor %}
+
 {% endblock %}

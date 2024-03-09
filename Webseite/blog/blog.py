@@ -16,6 +16,7 @@ def index():
     
     return render_template('index.html', posts=posts, topics=topics)
 
+
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
@@ -25,6 +26,7 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -68,16 +70,15 @@ def get_post(id, check_author=True):
     return post
 
 
-
 @bp.route('/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
-    
     
     db.session.query(Post).where(Post.id == id).delete()
     db.session.commit()
 
     return redirect(url_for('blog.index'))
+
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
@@ -123,6 +124,7 @@ def deletecomment(comment_id):
     db.session.query(Comments).where(Comments.comment_id == comment_id).delete()
     db.session.commit()
     return redirect(request.referrer)
+
 
 @bp.route("/newtopic",methods=["GET","POST"])
 @login_required
