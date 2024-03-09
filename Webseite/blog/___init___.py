@@ -29,23 +29,23 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
-
+    #register the blog blueprint
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
-    
+    #setting the app secret key and registering the user and authentication blueprint
     app.secret_key = b'@Rm`#*}FU9Wf2J;A#He"]}O(c^#gc'
     app.register_blueprint(auth.bp)
     app.register_blueprint(user.bp)
 
-
+    #setting up the color scheme route 
     @app.route("/set/<theme>")
     def set(theme):
         res = make_response(redirect(request.referrer))
         res.set_cookie("theme", theme)
         return res
 
-
+    
     @app.template_filter()
     def zeitformat(value):
         try:
@@ -55,7 +55,7 @@ def create_app(test_config=None):
         value3 = strftime('%d.%m.%Y at %H:%M UTC', value2)
         return value3
     
-
+    #avatar icon endpoint
     @app.route('/avatar/<string:usrnme>')
     def avatar(usrnme):
         filename = r'\\' + usrnme +"_s.png"
