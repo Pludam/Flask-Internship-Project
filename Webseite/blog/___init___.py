@@ -8,7 +8,7 @@ import user
 
 from flask_avatars import Avatars
 
-
+website_save_path= "Path_to_Website_location"
 
 def create_app(test_config=None):
     
@@ -20,9 +20,9 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI = "sqlite:///C:\\Users\\Damian.Plura\\Desktop\\Webseite\\blog\\instance\\blog.sqlite",
+        SQLALCHEMY_DATABASE_URI = "sqlite:///C:"+website_save_path+"\\Webseite\\blog\\instance\\blog.sqlite",
         APPNAME="Blog",
-        AVATARS_SAVE_PATH = "C:\\Users\\Damian.Plura\\Desktop\\Webseite\\blog\\avatars")
+        AVATARS_SAVE_PATH = "C:"+website_save_path+"\\Webseite\\blog\\avatars")
     db.init_app(app)
 
 
