@@ -35,11 +35,7 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # ensure the instance folder exists
-    #try:
-        #os.makedirs(app.instance_path)
-    #except OSError:
-     #   pass
+    
     
     
     app.register_blueprint(blog.bp)
@@ -76,7 +72,6 @@ def create_app(test_config=None):
         filename = r'\\' + usrnme +"_s.png"
         filename2 = app.config['AVATARS_SAVE_PATH'] + filename
         print(filename2)
-        #return send_from_directory(app.config['AVATARS_SAVE_PATH'], filename)
         return send_file(filename2)
     return app
 
